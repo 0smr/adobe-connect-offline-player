@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Control/CustomButton.qml</file>
+        <file>Control/CustomVideoSlider.qml</file>
+        <file>Control/Section.qml</file>
+        <file>View/ControlPanel.qml</file>
+        <file>View/VideoViewer.qml</file>
+        <file>View/MainView.qml</file>
+        <file>View/Settings.qml</file>
+    </qresource>
+</RCC>

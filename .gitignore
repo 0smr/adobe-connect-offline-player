@@ -1,0 +1,13 @@
+# qt auto save
+*.autosave
+
+# build directories
+/**/build-*
+
+
+# qtcreator generated files
+*.pro.user*
+
+# adobe connect test data
+/**/adobe data/*
+
