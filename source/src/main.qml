@@ -18,4 +18,8 @@ Window {
 
         anchors.fill: parent
     }
+
+    // for window custom frame checkout following pages:
+    // https://github.com/johanhelsing/qt-csd-demo/blob/master/webbrowser.qml
+    // https://doc.qt.io/qt-5/qt.html#WindowType-enum
 }
