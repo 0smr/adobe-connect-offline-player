@@ -8,29 +8,29 @@ Item {
 
     property real   duration: 0;
     property real   position: 0;
-    property alias  playing : videoTimer.running;
+    property alias  playing : audioTimer.running;
     property bool   autoPlay: false;
 
-    property var    videoStreamList: []
-
-    function start()        {
-        videoTimer.start();
-        control.playing = true;
-    }
+    property var    audioStreamList: []
 
     function seek(offset)   {
         position = offset;
-        for(var x of videoStreamList)
+        for(var x of audioStreamList)
             x.seekIf();
     }
 
+    function start()        {
+        audioTimer.start();
+        control.playing = true;
+    }
+
     function stop ()        {
-        videoTimer.stop();
+        audioTimer.stop();
         position = 0;
     }
 
     function pause()        {
-        videoTimer.stop();
+        audioTimer.stop();
         control.playing = false;
     }
 
@@ -38,30 +38,28 @@ Item {
         control.playing = !control.playing;
     }
 
-    function addVideoStream(url,startTime) {
-        var componnent = Qt.createComponent("VideoStream.qml");
-        var streamObject = componnent.createObject(control);
+    function addAudioStream(url,startTime) {
+        var componnent      = Qt.createComponent("AudioStream.qml");
+        var streamObject    = componnent.createObject(control);
 
         streamObject.source         = url;
-        streamObject.width          = control.width;
-        streamObject.height         = control.height;
-        streamObject.startTime      = startTime;
+        streamObject.startTime      = parseInt(startTime);
         streamObject.mainPosition   = Qt.binding(() => {return control.position;});
         streamObject.mainPlay       = Qt.binding(() => {return control.playing;});
 
-        videoStreamList.push(streamObject);
+        audioStreamList.push(streamObject);
     }
 
     onPositionChanged: {
         if(position > duration)
-            videoTimer.stop();
+            audioTimer.stop();
     }
 
     Timer {
-        id: videoTimer
-        interval: 1
-        repeat: true
+        id: audioTimer;
+        interval: 1;
+        repeat: true;
         onTriggered: position++;
-        running: control.autoPlay
+        running: control.autoPlay;
     }
 }
