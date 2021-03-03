@@ -1,3 +1,0 @@
-[submodule "source/src/3rd-party/qompress"]
-	path = source/src/3rd-party/qompress
-	url = https://github.com/gonzoua/qompress.git
