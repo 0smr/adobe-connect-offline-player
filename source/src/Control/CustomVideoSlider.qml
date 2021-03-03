@@ -23,6 +23,7 @@ QQC2.Control {
     //property alias hovered: mouseArea.containsMouse
 
     height: 15
+    opacity: enabled ? 1: 0.5;
 
     background:
         Rectangle {
@@ -96,21 +97,28 @@ QQC2.Control {
         }
     }
 
-    property int vidIter: 0;
-    property int aduIter: 0;
+     function reset() {
+         for(var v of videoObjects)
+             v.destroy();
+         for(var a of audioObjects)
+             a.destroy();
+         videoObjects = [];
+         audioObjects = [];
+         value = 0;
+     }
 
     function addVideoSubSection(from, to) {
         var component = Qt.createComponent("Section.qml");
         var sec = component.createObject(videoVisulizer);
         sec.height = videoVisulizer.height;
-        videoObjects[vidIter] = initSubSection(sec,from, to);
+        videoObjects.push(initSubSection(sec,from, to));
     }
 
     function addAudioSubSection(from, to) {
         var component = Qt.createComponent("Section.qml");
         var sec = component.createObject(audioVisulizer);
         sec.height = audioVisulizer.height;
-        audioObjects[vidIter] = initSubSection(sec,from, to);
+        audioObjects.push(initSubSection(sec,from, to));
     }
 
     function initSubSection(sec,from, to) {
