@@ -8,6 +8,7 @@ Item {
 
     property real   duration: 0;
     property real   position: 0;
+
     property alias  playing : videoTimer.running;
     property bool   autoPlay: false;
 
@@ -19,14 +20,22 @@ Item {
     }
 
     function seek(offset)   {
-        position = offset;
-        for(var x of videoStreamList)
-            x.seekIf();
+        if(offset >= 0 && offset <= duration) {
+            position = offset;
+            for(var x of videoStreamList)
+                x.seekIf();
+        }
     }
 
     function stop ()        {
         videoTimer.stop();
         position = 0;
+        duration = 0;
+        playing = false;
+
+        for(var x of videoStreamList)
+            x.destroy();
+        videoStreamList = [];
     }
 
     function pause()        {
@@ -43,9 +52,9 @@ Item {
         var streamObject = componnent.createObject(control);
 
         streamObject.source         = url;
-        streamObject.width          = control.width;
-        streamObject.height         = control.height;
         streamObject.startTime      = startTime;
+
+        //bindings
         streamObject.mainPosition   = Qt.binding(() => {return control.position;});
         streamObject.mainPlay       = Qt.binding(() => {return control.playing;});
 

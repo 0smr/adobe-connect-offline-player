@@ -17,6 +17,14 @@ Window {
         id: vv
 
         anchors.fill: parent
+
+        onToggleMaximized: {
+            if (window.visibility === Window.Maximized) {
+                window.showNormal();
+            } else {
+                window.showMaximized();
+            }
+        }
     }
 
     // for window custom frame checkout following pages:
