@@ -21,11 +21,9 @@ Audio {
     audioRole:  MediaPlayer.VideoRole
 
     onActiveChanged: {
-        if(active) {
-            seek(mainPosition-startTime);
+        if(active)
             play();
-        }
         else
-            stop();
+            pause();
     }
 }
