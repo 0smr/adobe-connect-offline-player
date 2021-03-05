@@ -79,7 +79,7 @@ QVariantMap fileHandler::extractDataStreamTimeStamps(QUrl fileAddr)
     return tempSession;
 }
 
-bool fileHandler::isValidFolder(QUrl folderUrl)
+bool fileHandler::isValidDirectory(QUrl folderUrl)
 {
     return QFile::exists(folderUrl.toLocalFile() + "/indexstream.xml");
 }

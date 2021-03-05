@@ -2,9 +2,11 @@
 #define FILEHANDLER_H
 
 #include <QXmlStreamReader>
+#include <QDesktopServices>
 #include <QMetaType>
 #include <QFileInfo>
 #include <QObject>
+#include <QRegExp>
 #include <QFile>
 #include <QUrl>
 
@@ -27,33 +29,57 @@ public:
 signals:
 
 public slots:
-    bool isValidFolder(QUrl folderUrl);
+    bool isValidDirectory(QUrl folderUrl);
+
+    QString handleText(QString text)
+    {
+        QString webUrl = "";
+
+        QRegExp isZipUrl("^https:\\/\\/webinar.*\\.qiet.ac.ir.*download=zip$");
+        QRegExp isUrl   ("^(https:\\/\\/|)webinar.*\\.qiet.ac.ir\\/(\\w|\\d)*.$");
+        QRegExp isToken ("^(\\w|\\d)*$");
+
+        if(isZipUrl.exactMatch(text))
+        {
+            webUrl = text   ;
+        }
+        else if(isUrl.exactMatch(text))
+        {
+            webUrl = text + (text.endsWith("/") ? "" : "/") + "output/outputfile.zip?download=zips";
+        }
+        else if(isToken.exactMatch(text))
+        {
+            //"https://webinar1.qiet.ac.ir/" + text + "/output/outputfile.zip?download=zip";
+            webUrl = "https://webinar2.qiet.ac.ir/" + text + "/output/outputfile.zip?download=zip";
+        }
+
+        if(webUrl != "")
+            QDesktopServices::openUrl(webUrl);
+
+        return "";
+    }
+
+    QUrl handleUrl(QList<QUrl> urls)
+    {
+        if(urls[0].toString().endsWith(".zip"))
+        {
+            //decompress
+            return QUrl("");//urls[0];
+        }
+        else if(urls[0].toString().endsWith("indexstream.xml"))
+        {
+            return urls[0];
+        }
+        else if(isValidDirectory(urls[0]) == true)
+        {
+            return QUrl(urls[0].toString() + "/indexstream.xml");
+        }
+
+        return QUrl("");
+    }
+
     bool decompressZipFile(QUrl workDirectory)
     {
-        //Open the ZIP archive
-        int err = 0;
-        zip *z = zip_open("foo.zip", 0, &err);
-
-        //Search for the file of given name
-        const char *name = "file.txt";
-        struct zip_stat st;
-        zip_stat_init(&st);
-        zip_stat(z, name, 0, &st);
-
-        //Alloc memory for its uncompressed contents
-        char *contents = new char[st.size];
-
-        //Read the compressed file
-        zip_file *f = zip_fopen(z, name, 0);
-        zip_fread(f, contents, st.size);
-        zip_fclose(f);
-
-        //And close the archive
-        zip_close(z);
-
-        //Do something with the contents
-        //delete allocated memory
-        delete[] contents;
         return false;
     }
 

@@ -74,8 +74,15 @@ Item {
         enabled: true
 
         onDropped: {
-            if(fileHandler.isValidFolder(drop.urls[0])) {
-                mediaPlayerInit(drop.urls[0] + "/indexstream.xml");
+            console.log(drop.urls.length)
+            var res = "";
+            if(drop.hasUrls)
+                res = fileHandler.handleUrl(drop.urls);
+            else if(drop.hasText)
+                res = fileHandler.handleText(drop.text);
+
+            if(res !== "") {
+                mediaPlayerInit(res);
                 changeStatus("indexstream added");
             }
         }
@@ -110,7 +117,7 @@ Item {
     Text {
         opacity: 0.7;
         color: 'white';
-        text: "Drop Session Folder\n+";
+        text: "Drop Session Here\n+";
         font {
             pixelSize: 17;
             family: "Arial";
@@ -135,7 +142,7 @@ Item {
         Rectangle {
             width: colItem.width
             height: colItem.height - controlSection.height
-            color: 'gray'
+            color: 'black'
             Row {
                 anchors.fill: parent
 
