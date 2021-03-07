@@ -14,5 +14,14 @@
         <file>Control/CustomIcoBottun.qml</file>
         <file>Resources/Fonts/icofont.ttf</file>
         <file>Control/CustomSwitchToggleButton.qml</file>
+        <file>View/CustomFrameLessWindow.qml</file>
+        <file>Control/CustomHeaderButton.qml</file>
+        <file>Resources/Application Icon/ACOP.ico</file>
+        <file>View/About.qml</file>
+        <file>Resources/Application Icon/ACOP.svg</file>
+        <file>Resources/Fonts/consola.ttf</file>
+        <file>Resources/Fonts/consolab.ttf</file>
+        <file>Resources/Fonts/consolai.ttf</file>
+        <file>Resources/Fonts/consolaz.ttf</file>
     </qresource>
 </RCC>
