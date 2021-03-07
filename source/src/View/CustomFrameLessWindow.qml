@@ -85,7 +85,6 @@ Window {
         x: window.isMax || window.x < 4 ? 0 : 4
         y: window.isMax || window.y < 4 ? 0 : 4
 
-
         width:  window.isMax ? parent.width : parent.width - x - 4;
         height: window.isMax ? parent.height: parent.height- y - 4;
 
@@ -110,7 +109,7 @@ Window {
                     CustomHeaderButton {
                         text: '\ueee4';
                         color: '#C43E5C'
-                        font.family: icoFont2.name;
+                        font.family: icoFont.name;
                         height: parent.height
                         onClicked: Qt.quit()
                     }

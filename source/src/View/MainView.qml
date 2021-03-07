@@ -1,4 +1,4 @@
-import QtQuick 2.12
+import QtQuick 2.15
 import QtQuick.Controls 2.12 as QQC2
 import QtQuick.Layouts 1.12 as QQL1
 import QtQuick.Window 2.12
@@ -55,9 +55,10 @@ Item {
         videoPlayer.start();
     }
 
-    function changeStatus(text) {
-        if(videoPlayer.duration !== 0) {
+    function changeStatus(text,force = false,color = "#05E2FF") {
+        if(videoPlayer.duration !== 0 || force) {
             status.text = text;
+            status.color = color;
             statusTimer.restart();
             status.visible = true;
         }
@@ -69,24 +70,28 @@ Item {
     }
 
     DropArea {
+        id: dropArea
+
         anchors.fill: parent
         visible: true
         enabled: true
 
         onDropped: {
-            console.log(drop.urls.length)
-            var res = "";
+            var resUrl = "";
             if(drop.hasUrls)
-                res = fileHandler.handleUrl(drop.urls);
+                resUrl = fileHandler.handleUrl(drop.urls);
             else if(drop.hasText)
-                res = fileHandler.handleText(drop.text);
-
-            if(res !== "") {
-                mediaPlayerInit(res);
-                changeStatus("indexstream added");
+                resUrl = fileHandler.handleText(drop.text);
+            console.log(resUrl)
+            if(resUrl.toString().length > 3) {
+                mediaPlayerInit(resUrl);
+                changeStatus("video streams added");
             }
+            else
+                changeStatus("invalid file",true);
         }
     }
+
 
     Text {
         id: status
@@ -169,7 +174,7 @@ Item {
 
                         onWheel: {
                             audioPlayer.changeVolume(wheel.angleDelta.y / 1000);
-                            changeStatus(Math.floor(audioPlayer.volume * 100));
+                            changeStatus(Math.floor(audioPlayer.volume * 100),true);
                         }
                     }
                 }
@@ -247,7 +252,7 @@ Item {
                             audioPlayer.stop();
                             videoPlayer.stop();
                             timeLine.reset();
-                            changeStatus("stop");
+                            changeStatus("stop",true,"#F13965");
                         }
                     }
 
@@ -308,11 +313,11 @@ Item {
 
         if(event.key === Qt.Key_Up) {
             audioPlayer.changeVolume(+0.05);
-            changeStatus(Math.floor(audioPlayer.volume * 100));
+            changeStatus(Math.floor(audioPlayer.volume * 100),true);
         }
         else if(event.key === Qt.Key_Down) {
             audioPlayer.changeVolume(-0.05);
-            changeStatus(Math.floor(audioPlayer.volume * 100));
+            changeStatus(Math.floor(audioPlayer.volume * 100),true);
         }
 
         if(event.key === Qt.Key_Space) {

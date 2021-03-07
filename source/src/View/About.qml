@@ -6,7 +6,7 @@ import QtMultimedia 5.12
 Window {
     id: info
 
-    visible: true;
+    visible: false;
     minimumWidth: 350;
     minimumHeight: 200;
 
