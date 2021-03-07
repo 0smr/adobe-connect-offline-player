@@ -1,6 +1,6 @@
 name: CI build
 
-on: [push]
+# on: [push]
 
 jobs:
   build:
@@ -12,27 +12,27 @@ jobs:
           
         platform:
           - gcc_64
-          - msvc2019
           - msvc2019_64
-          - clang_64
+          - mingw81
 
         include:
           - platform: gcc_64
             os: ubuntu-latest
             osname: linux
             arch: x86_64
+            target: desktop
+
           - platform: msvc2019_64
             os: windows-latest
             osname: windows
-            arch: x86_64
-          - platform: msvc2019
+            arch: win64_msvc2019_64
+            target: desktop
+
+          - platform: mingw81
             os: windows-latest
             osname: windows
-            arch: x86
-          - platform: clang_64
-            os: macos-latest
-            osname: macos
-            arch: x86_64
+            arch: win64_mingw81
+            target: desktop
             
     runs-on: ${{matrix.os}}
     steps:
@@ -40,13 +40,12 @@ jobs:
         with:
           submodules: recursive
       - uses: actions/setup-python@v1
-      - uses: Skycoder42/action-setup-qt@master
-        id: qt
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
         with:
           version: ${{matrix.version}}
-          platform: ${{matrix.platform}}
-          packages: qt.tools.ifw.32
-      - name: qmake
+          host: ${{matrix.osname}}
+      - name: qmake 
         run: |
           qmake QT_PLATFORM=${{matrix.platform}} "INSTALL_PATH=installer/bin" "QT_TOOL_PATH=${{steps.qt.outputs.qtdir}}/Tools" QtConfig.pro
           ${{steps.qt.outputs.make}} qmake_all
