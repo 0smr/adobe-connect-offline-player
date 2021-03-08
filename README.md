@@ -8,8 +8,11 @@ it read *index stream* file and plays videos and audios at their right time.
 
 ## Download
 
-you can get lastes version of tho program for:
+you can get lastes version of the program for:
 - [Windows x64](https://github.com/SMR76/adobe-connect-offline-player/releases)
+
+## Dependencies
+- [K-Lite Codec Pack Basic](https://codecguide.com/download_k-lite_codec_pack_basic.htm) from [codecguide](https://codecguide.com/download_kl.htm).
 <!--
 ## Preview
 -->
@@ -21,6 +24,7 @@ you can get lastes version of tho program for:
 - [ ] unzip records to specified work directory.
 - [ ] add CI/CD.
 - [ ] show record contains pdf slides.
+- [ ] codec independent.
 
 ## Change sets
 <details>
