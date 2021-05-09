@@ -1,0 +1,105 @@
+name: CI build
+
+on:
+  push:
+     tags:
+       - 'v*.*.*'
+# ------------ enable manual rerun ----------------
+  workflow_dispatch:
+    inputs:
+      debug:
+        description: 'debug status'
+        default: 'true'
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        version:
+          - 5.15.2
+          
+        platform:
+#          - gcc_64
+#          - android
+#          - msvc2019
+#          - msvc2019_64
+#          - mingw81_32
+#          - clang_64
+          - mingw81_64
+
+        include:
+#          - platform: gcc_64
+#            os: ubuntu-latest
+#          - platform: android
+#            os: ubuntu-latest
+#          - platform: msvc2019
+#            os: windows-latest
+#          - platform: mingw81_32
+#            os: windows-latest
+#            ver: win32_mingw81
+#          - platform: msvc2019_64
+#            os: windows-latest
+#            arch: win64_msvc2019_64
+          - platform: mingw81_64
+            os: windows-latest
+            arch: win64_mingw81
+            
+    runs-on: ${{matrix.os}}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v1
+        with:
+          submodules: recursive
+#      - name: Cache Qt
+#        id: cache-qt
+#        uses: actions/cache@v1
+#        with:
+#          path: ../Qt
+#          key: ${{ matrix.os }}-QtCache 
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2.13.2
+        with:
+          version: '${{ matrix.version }}'
+          arch:    '${{ matrix.arch }}'
+          extra:   '--external 7z'
+#          modules: 'qtnetworkauth'
+          tools:   'tools_ifw,4.1.0,qt.tools.ifw.41 tools_qtcreator,4.14.2-0,qt.tools.qtcreator'
+          setup-python: 'true'
+#          cached:  ${{ steps.cache-qt.outputs.cache-hit }}
+          
+      - name: add cl.exe
+        if: contains( ${{ matrix.platform }} , 'mingw')
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: qmake
+        run: qmake adobeConnectOfflinePlayer.pro "CONFIG+=qtquickcompiler" 
+
+# ------------ windows mingw64 make & deploy ----------------
+      - name: make
+        if: contains( ${{ matrix.os }} , 'windows')
+        run: | 
+          mingw32-make.exe qmake_all
+          mingw32-make.exe
+          mkdir deploy && mv release/adobeConnectOfflinePlayer.exe deploy
+          windeployqt.exe --qmldir "../Qt/5.15.2/mingw81_64/qml" deploy/adobeConnectOfflinePlayer.exe 
+          cp '../Qt/5.15.2/mingw81_64/bin/libgcc_s_seh-1.dll' ./deploy/
+          cp '../Qt/5.15.2/mingw81_64/bin/libwinpthread-1.dll' ./deploy/
+          cp '../Qt/5.15.2/mingw81_64/bin/libstdc++-6.dll' ./deploy/
+          cd deploy
+          powershell Compress-Archive * ACOP-${{matrix.platform}}.zip
+
+# ------------ debug workflow using ssh ----------------
+      - name: Setup tmate session
+        if: github.event.inputs.debug == 'true'
+        uses: mxschmitt/action-tmate@v3
+# ------------ Upload to releases ----------------
+      - name: Upload to releases
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{github.workspace}}/deploy/ACOP-${{ matrix.platform }}.zip
+          asset_name: ACOP-${{ matrix.platform }}-${{ github.ref }}.zip
+          tag: ${{ github.ref }}
+          overwrite: 'true'
