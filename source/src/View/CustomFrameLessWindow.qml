@@ -102,6 +102,14 @@ Window {
                             window.startSystemMove();
                 }
 
+                Text {
+                    leftPadding: 5;
+                    text:   "<b style='color:#00c77d;'>ACO</b><b style='color:#8bcdb8;'>Player</b>";
+                    font.bold: true;
+                    color: "#eee"
+                    textFormat: Qt.RichText
+                }
+
                 Row {
                     anchors.fill: parent
                     layoutDirection: Qt.RightToLeft
