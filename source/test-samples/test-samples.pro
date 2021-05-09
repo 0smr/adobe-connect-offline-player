@@ -1,5 +1,5 @@
 QT -= gui
-QT += network
+QT += network xml
 
 # DEFINES  += QT_NO_SSL
 
