@@ -1,4 +1,4 @@
-QT += quick multimedia
+QT += quick multimedia xml
 
 CONFIG += c++14
 
@@ -17,6 +17,8 @@ SOURCES += \
 
 RESOURCES += qml.qrc
 
+include(3rd Parties/qompress/qompress.pri)
+
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
 
@@ -29,3 +31,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RC_FILE += resource.rc
+

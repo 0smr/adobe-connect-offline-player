@@ -1,5 +1,5 @@
 import QtQuick 2.15
-import QtQuick.Controls 2.12 as QQC2
+import QtQuick.Controls 2.15 as QQC2
 import QtQuick.Layouts 1.12 as QQL1
 import QtQuick.Window 2.12
 import QtMultimedia 5.12
@@ -82,7 +82,6 @@ Item {
                 resUrl = fileHandler.handleUrl(drop.urls);
             else if(drop.hasText)
                 resUrl = fileHandler.handleText(drop.text);
-            console.log(resUrl)
             if(resUrl.toString().length > 3) {
                 mediaPlayerInit(resUrl);
                 changeStatus("video streams added");
@@ -91,7 +90,6 @@ Item {
                 changeStatus("invalid file",true);
         }
     }
-
 
     Text {
         id: status
