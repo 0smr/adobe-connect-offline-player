@@ -1,0 +1,3 @@
+[submodule "source/src/3rd Parties/qompress"]
+	path = source/src/3rd Parties/qompress
+	url = git@github.com:SMR76/qompress.git
