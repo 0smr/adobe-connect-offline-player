@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<networkHandler> ("io.network",  1,0,"NetworkHandler");
 
     app.setOrganizationName     ("smr");
-    app.setApplicationVersion   ("0.1");
+    app.setApplicationVersion   ("0.2");
     app.setOrganizationDomain   ("smr67.github.io");
     app.setApplicationName      ("Adobe Connect Offline Player");
     app.setWindowIcon(QIcon(":/Resources/Application Icon/ACOP.ico"));
