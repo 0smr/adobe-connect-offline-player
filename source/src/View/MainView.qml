@@ -8,7 +8,6 @@ import io.file 1.0
 
 import "../Control"
 
-
 Item {
     id: control
 
@@ -69,6 +68,10 @@ Item {
         source: "qrc:/Resources/Fonts/icofont.ttf"
     }
 
+    FileHandler {
+        id: fileHandler
+    }
+
     DropArea {
         id: dropArea
 
@@ -79,9 +82,9 @@ Item {
         onDropped: {
             var resUrl = "";
             if(drop.hasUrls)
-                resUrl = fileHandler.handleUrl(drop.urls);
+                resUrl = fileHandler.isFile(drop.urls);
             else if(drop.hasText)
-                resUrl = fileHandler.handleText(drop.text);
+                resUrl = fileHandler.isValidUrl(drop.text);
             if(resUrl.toString().length > 3) {
                 mediaPlayerInit(resUrl);
                 changeStatus("video streams added");
@@ -133,8 +136,11 @@ Item {
         visible: videoPlayer.duration <= 0;
     }
 
-    FileHandler {
-        id: fileHandler
+    Rectangle {
+        anchors.fill: parent
+        border.color: '#ccc'
+        border.width: 1
+        color: 'Transparent'
     }
 
     Column {
@@ -241,7 +247,7 @@ Item {
                     width:  childrenRect.width
                     height: controlSection.height - 2 *timeLine.height - 15
 
-                    CustomIcoBottun {
+                    CustomIcoButton {
                         id: stop
                         width: parent.height
                         text: '\ueffc'
@@ -254,7 +260,7 @@ Item {
                         }
                     }
 
-                    CustomIcoBottun {
+                    CustomIcoButton {
                         id: previes
                         width: parent.height
                         text: '\uec78'
@@ -277,7 +283,7 @@ Item {
                         }
                     }
 
-                    CustomIcoBottun {
+                    CustomIcoButton {
                         id: next
                         width: parent.height
                         text: '\uec6e'
@@ -285,7 +291,7 @@ Item {
                         enabled: false;
                     }
 
-                    CustomIcoBottun {
+                    CustomIcoButton {
                         id: messages
                         width: parent.height
                         text: '\uec68'

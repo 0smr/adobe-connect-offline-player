@@ -4,14 +4,13 @@
         <file>Control/CustomButton.qml</file>
         <file>Control/CustomVideoSlider.qml</file>
         <file>Control/Section.qml</file>
-        <file>View/ControlPanel.qml</file>
         <file>Control/VideoPlayer.qml</file>
         <file>View/MainView.qml</file>
-        <file>View/Settings.qml</file>
+        <file>View/Setting.qml</file>
         <file>Control/VideoStream.qml</file>
         <file>Control/AudioPlayer.qml</file>
         <file>Control/AudioStream.qml</file>
-        <file>Control/CustomIcoBottun.qml</file>
+        <file>Control/CustomIcoButton.qml</file>
         <file>Resources/Fonts/icofont.ttf</file>
         <file>Control/CustomSwitchToggleButton.qml</file>
         <file>View/CustomFrameLessWindow.qml</file>
@@ -23,5 +22,8 @@
         <file>Resources/Fonts/consolab.ttf</file>
         <file>Resources/Fonts/consolai.ttf</file>
         <file>Resources/Fonts/consolaz.ttf</file>
+        <file>Resources/Application Icon/ACOP-Grayscale.svg</file>
+        <file>Control/CustomTextArea.qml</file>
+        <file>View/MainWindow.qml</file>
     </qresource>
 </RCC>

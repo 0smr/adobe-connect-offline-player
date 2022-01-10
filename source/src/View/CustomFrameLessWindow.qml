@@ -8,7 +8,9 @@ import "../Control"
 Window {
     id: window;
 
+    property alias header: page.header;
     property alias contentItem: page.contentItem;
+
     property bool isMax: window.visibility === Window.Maximized;
     property bool stayOnTop: false;
 
@@ -87,73 +89,6 @@ Window {
 
         width:  window.isMax ? parent.width : parent.width - x - 4;
         height: window.isMax ? parent.height: parent.height- y - 4;
-
-        header:
-            Rectangle {
-                height: 15
-                color: 'gray'
-                MouseArea {
-                    y: 3;
-                    height: parent.height;
-                    width: parent.width;
-
-                    onPositionChanged:
-                        if(containsPress)
-                            window.startSystemMove();
-                }
-
-                Text {
-                    leftPadding: 5;
-                    text:   "<b style='color:#00c77d;'>ACO</b><b style='color:#8bcdb8;'>Player</b>";
-                    font.bold: true;
-                    color: "#eee"
-                    textFormat: Qt.RichText
-                }
-
-                Row {
-                    anchors.fill: parent
-                    layoutDirection: Qt.RightToLeft
-
-                    CustomHeaderButton {
-                        text: '\ueee4';
-                        color: '#C43E5C'
-                        font.family: icoFont.name;
-                        height: parent.height
-                        onClicked: Qt.quit()
-                    }
-                    CustomHeaderButton {
-                        text: window.isMax ? '\uf033' : '\uf034';
-                        font.family: icoFont.name;
-                        height: parent.height;
-                        onClicked: window.toggleMaximized();
-                    }
-                    CustomHeaderButton {
-                        text: '\uef9a';
-                        font.family: icoFont.name;
-                        height: parent.height;
-                        onClicked: window.showMinimized();
-                    }
-                    CustomHeaderButton {
-                        text: window.stayOnTop ? '\uf031' : '\uf032';
-                        font.family: icoFont.name;
-                        height: parent.height;
-                        onPressed: window.stayOnTop = !window.stayOnTop;
-                    }
-                    CustomHeaderButton {
-                        text: '\uef50';
-                        font.pixelSize: parent.height * 0.5
-                        font.family: icoFont.name;
-                        height: parent.height;
-                        onPressed: {
-                            about.visible = true;
-                        }
-                    }
-                }
-            }
-    }
-
-    About {
-        id: about
     }
 }
 

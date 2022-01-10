@@ -6,16 +6,16 @@ import QtMultimedia 5.12
 import "Control"
 import "View"
 
-CustomFrameLessWindow {
+MainWindow {
     id: window
 
-    minimumWidth: 350;
-    minimumHeight: 300;
-    visible: true;
-    title: qsTr("Offline adobe video player");
+//    contentItem:
+//        MainView {
+//            onToggleMaximized: window.toggleMaximized();
+//        }
 
-    contentItem:
-        MainView {
-            onToggleMaximized: window.toggleMaximized();
-        }
+    Setting {
+        id: settings
+        visible: true
+    }
 }

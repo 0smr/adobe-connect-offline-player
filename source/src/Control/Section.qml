@@ -13,6 +13,7 @@ Item {
     Rectangle {
         id: background;
         opacity: selected ? 1 : 0.8;
+        color: '#C8FFD9'
 
         anchors {
             fill: parent;

@@ -5,6 +5,8 @@ import QtQuick.Layouts 1.12
 Button {
     id: control
 
+    property color color: '#eee'
+
     width: 25;
     height: width;
 
@@ -15,8 +17,9 @@ Button {
 
         text: control.text;
         font: control.font;
+        //
         opacity: enabled ? pressed ? 0.7 : 1.0 : 0.3;
-        color: control.pressed ? "#fff" : "#eee";
+        color: control.pressed ? Qt.lighter(control.color) : control.color;
         horizontalAlignment: Text.AlignHCenter;
         verticalAlignment: Text.AlignVCenter;
 

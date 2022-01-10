@@ -1,5 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <QDebug>
 #include <QIcon>
 
@@ -12,6 +13,8 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
+
+    engine.rootContext()->setContextProperty("applicationDirPath", QGuiApplication::applicationDirPath() + "/sessions");
 
     qmlRegisterType<fileHandler>    ("io.file",     1,0,"FileHandler");
     qmlRegisterType<networkHandler> ("io.network",  1,0,"NetworkHandler");

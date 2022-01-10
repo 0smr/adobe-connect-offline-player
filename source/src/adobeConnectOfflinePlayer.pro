@@ -32,3 +32,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RC_FILE += resource.rc
 
+LIBS += -LC:/msys64/mingw64/bin/*

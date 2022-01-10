@@ -18,3 +18,17 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+win32 {
+    SHARED_LIB_FILES = $$files($$PWD/poppler/lib/*.a)
+    message($$SHARED_LIB_FILES)
+    for(FILE, SHARED_LIB_FILES) {
+        BASENAME = $$basename(FILE)
+        LIBS += -l$$replace(BASENAME,\.a,)
+    }
+}
+
+LIBS += -LC:/msys64/mingw64/bin/*
+
+INCLUDEPATH +=  $$PWD/poppler/include
+DEPENDPATH +=   $$PWD/poppler/include
+

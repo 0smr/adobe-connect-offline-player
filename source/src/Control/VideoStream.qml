@@ -19,10 +19,10 @@ Video {
             video.seek(mainPosition-startTime);
     }
 
-    visible: inRange;
+    visible:    inRange;
 
-    source: ""
-    audioRole:              MediaPlayer.VideoRole
+    source:     ""
+    audioRole:  MediaPlayer.VideoRole
 
     onActiveChanged: {
         if(active)
